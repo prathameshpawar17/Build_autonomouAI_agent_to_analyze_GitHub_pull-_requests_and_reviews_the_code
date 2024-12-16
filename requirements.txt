@@ -1,0 +1,5 @@
+requests
+pydantic-settings
+aioredis
+numpy
+langchain
