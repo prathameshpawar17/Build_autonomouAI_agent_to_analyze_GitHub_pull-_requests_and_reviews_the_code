@@ -1,10 +1,14 @@
 import os
+from dotenv import load_dotenv
 from pydantic_settings import BaseSettings
 
+load_dotenv()
+
+
 class Settings(BaseSettings):
-    redis_url: str
-    database_url: str
-    ollama_api_key: str
+    REDIS_URL: str
+    DATABASE_URL: str
+    OPENAI_API_KEY: str
     GITHUB_TOKEN: str
 
     class Config:

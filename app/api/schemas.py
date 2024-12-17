@@ -1,8 +1,10 @@
-from pydantic import BaseModel
+from pydantic import HttpUrl
+
 
 class AnalyzePRRequest(BaseModel):
-    repo_url: str
+    repo_url: HttpUrl
     pr_number: int
+
 
 class TaskStatusResponse(BaseModel):
     task_id: str
