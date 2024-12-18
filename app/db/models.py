@@ -1,14 +1,14 @@
 from sqlalchemy import Column, String, Text, Enum, create_engine, Integer
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from ..config import settings
+from ..config import Config
 from ..logger import logging
 
 # Base class for models
 Base = declarative_base()
 
 # Database engine and session factory
-DATABASE_URL = settings.DATABASE_URL
+DATABASE_URL = Config.DATABASE_URL
 engine = create_engine(DATABASE_URL, echo=True)  # `echo=True` for SQL query logging
 SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
 

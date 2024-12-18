@@ -1,5 +1,13 @@
 from pydantic import HttpUrl
+from pydantic import BaseModel
 
+class PRRequest(BaseModel):
+    content: str
+    token: str = None
+
+class PRResponse(BaseModel):
+    task_id: str
+    status: str
 
 class AnalyzePRRequest(BaseModel):
     repo_url: HttpUrl

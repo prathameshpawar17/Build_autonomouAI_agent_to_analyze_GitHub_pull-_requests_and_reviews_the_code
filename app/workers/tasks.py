@@ -2,7 +2,7 @@ import requests
 from celery import Celery
 from ..db.postgres import update_task_status
 from ..db.models import SessionLocal
-from ..config import settings
+from ..config import Config
 from ..logger import logging
 from ..core.github_utils import fetch_pr_files
 from langchain.chat_models import ChatOpenAI
@@ -11,8 +11,8 @@ from langchain.chains import LLMChain
 
 app = Celery(
     "tasks",
-    broker=settings.REDIS_URL,  # Redis for message queuing
-    backend=settings.REDIS_URL  # PostgreSQL for task results
+    broker=Config.REDIS_URL,  # Redis for message queuing
+    backend=Config.REDIS_URL  # PostgreSQL for task results
 )
 
 @app.task(bind=True)

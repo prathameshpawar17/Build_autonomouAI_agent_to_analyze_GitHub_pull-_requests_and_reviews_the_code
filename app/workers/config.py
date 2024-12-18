@@ -1,4 +1,4 @@
-from ..config import settings
+from ..config import Config
 
-CELERY_BROKER_URL = settings.REDIS_URL
-CELERY_RESULT_BACKEND = settings.REDIS_URL
+CELERY_BROKER_URL = Config.REDIS_URL
+CELERY_RESULT_BACKEND = Config.REDIS_URL

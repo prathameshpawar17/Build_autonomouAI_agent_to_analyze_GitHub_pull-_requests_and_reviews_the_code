@@ -1,5 +1,5 @@
 import requests
-from ..config import settings
+from ..config import Config
 
 def fetch_pr_files(repo_url: str, pr_number: int):
     try:
@@ -17,7 +17,7 @@ def fetch_pr_files(repo_url: str, pr_number: int):
         url = f"https://api.github.com/repos/{owner}/{repo}/pulls/{pr_number}/files"
         headers = {
             "Accept": "application/vnd.github.v3+json",
-            "Authorization": f"Bearer {settings.GITHUB_TOKEN}",
+            "Authorization": f"Bearer {Config.GITHUB_TOKEN}",
         }
 
         response = requests.get(url, headers=headers)
