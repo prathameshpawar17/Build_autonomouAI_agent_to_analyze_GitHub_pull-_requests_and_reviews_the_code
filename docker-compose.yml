@@ -1,9 +1,41 @@
+version: '3.8'
+
 services:
+  app:
+    build:
+      context: .
+    image: fastapi_app_image
+    container_name: fastapi_app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+      - postgres
+    networks:
+      - app_network
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - DATABASE_URL=postgresql+psycopg2://<username>:<password>@<host>:<port>/<database>
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
+
   redis:
     image: redis:7.0
     container_name: redis_container
     ports:
       - "6379:6379"
+    networks:
+      - app_network
+
+  postgres:
+    image: postgres:15
+    container_name: postgres_container
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: sunny
+      POSTGRES_DB: github_data_test_AI_agent
     networks:
       - app_network
 
@@ -15,12 +47,15 @@ services:
     command: celery -A app.workers.tasks worker --loglevel=info
     depends_on:
       - redis
+      - postgres
     networks:
       - app_network
     environment:
-      - CELERY_BROKER_URL=redis://:IlDNZ7rT1cLnjEoB767v2WH2clDuNAe1@redis-17251.c270.us-east-1-3.ec2.redns.redis-cloud.com:17251/0
+      - CELERY_BROKER_URL=redis://redis:6379/0
       - REDIS_URL=redis://redis:6379/0
-      - DATABASE_URL=postgresql+psycopg2://postgres:sunny@localhost:5432/github_data_test_AI_agent
+      - DATABASE_URL=postgresql+psycopg2://<username>:<password>@<host>:<port>/<database>
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
 
 networks:
   app_network:

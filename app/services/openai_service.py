@@ -1,5 +1,5 @@
 import openai
-from app.config import Config
+from ..config import Config
 
 class OpenAIService:
     def __init__(self):

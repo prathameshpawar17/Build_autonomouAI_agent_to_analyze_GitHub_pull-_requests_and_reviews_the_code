@@ -1,5 +1,5 @@
 import redis
-from app.config import Config
+from ..config import Config
 
 class RedisService:
     def __init__(self):

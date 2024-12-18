@@ -16,4 +16,5 @@ openai
 pytest
 gitpython
 psycopg2
+billiard
 -e .

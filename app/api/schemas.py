@@ -1,5 +1,5 @@
-from pydantic import HttpUrl
-from pydantic import BaseModel
+from pydantic import HttpUrl, BaseModel
+
 
 class PRRequest(BaseModel):
     content: str

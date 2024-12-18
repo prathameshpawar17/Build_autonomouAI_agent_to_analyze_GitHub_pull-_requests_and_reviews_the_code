@@ -16,7 +16,23 @@ class Config:
         for var in required_vars:
             if not os.getenv(var):
                 raise ValueError(f"Environment variable {var} is missing.")
+# # config.py
+# import os
+# from dotenv import load_dotenv
+# from pydantic_settings import BaseSettings
 
+# load_dotenv()
+
+# class Config(BaseSettings):
+#     REDIS_URL: str 
+#     DATABASE_URL: str
+#     OPENAI_API_KEY: str
+#     GITHUB_TOKEN: str
+
+#     class Config:
+#         env_file = ".env"
+
+# settings = Config()
 
 # import os
 # from dotenv import load_dotenv

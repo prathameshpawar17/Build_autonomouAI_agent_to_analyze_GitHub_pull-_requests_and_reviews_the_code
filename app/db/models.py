@@ -1,18 +1,14 @@
-from sqlalchemy import Column, String, Text, Enum, create_engine, Integer
+from sqlalchemy import Column, String, Text, Enum, Integer, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from ..config import Config
 from ..logger import logging
 
-# Base class for models
 Base = declarative_base()
-
-# Database engine and session factory
 DATABASE_URL = Config.DATABASE_URL
-engine = create_engine(DATABASE_URL, echo=True)  # `echo=True` for SQL query logging
+engine = create_engine(DATABASE_URL, echo=True)
 SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
 
-# Task model
 class Task(Base):
     __tablename__ = "Github_table"
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)

@@ -5,6 +5,8 @@ from openai import Completion
 from ..database import save_task_result
 from ..config import Config
 #celery_app = Celery('tasks', broker='redis://localhost:6379/0', backend='redis://localhost:6379/0')
+
+
 celery_app = Celery(
     "tasks",
     broker=Config.REDIS_URL,  # Redis for message queuing

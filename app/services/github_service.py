@@ -1,5 +1,6 @@
 import requests
-from app.config import Config
+from ..config import Config
+#from app.Settings import Settings
 
 class GitHubService:
     def __init__(self):

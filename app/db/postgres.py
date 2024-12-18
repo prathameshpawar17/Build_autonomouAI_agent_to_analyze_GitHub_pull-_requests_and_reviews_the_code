@@ -1,6 +1,9 @@
 from sqlalchemy.orm import Session
 from .models import Task, SessionLocal
 from ..logger import logging
+from .redis import get_redis_client
+import json
+
 
 # Dependency to provide a database session
 def get_db():
@@ -24,18 +27,29 @@ def create_task(task_id: str, db: Session):
         logging.error(f"Error creating task: {e}")
         raise
 
-# Update task status
-def update_task_status(task_id: str, status: str, result: str = None, db: Session = None):
+
+# Update task status in Redis and PostgreSQL
+def update_task_status(task_id: str, status: str, result=None, db: Session = None):
+    redis_client = get_redis_client()  # Connect to Redis
     try:
+        # Update PostgreSQL
         task = db.query(Task).filter(Task.task_id == task_id).first()
         if not task:
             logging.warning(f"Task with ID {task_id} not found.")
             return None
-
         task.status = status
         task.result = result
         db.commit()
         db.refresh(task)
+        logging.info(f"Task with ID {task_id} updated to status: {status}")
+
+        # Update Redis
+        redis_data = {
+            "task_id": task_id,
+            "status": status,
+            "result": result,
+        }
+        redis_client.set(f"task:{task_id}", json.dumps(redis_data), ex=3600)  # Set TTL of 1 hour
         logging.info(f"Task with ID {task_id} updated to status: {status}")
         return task
     except Exception as e:

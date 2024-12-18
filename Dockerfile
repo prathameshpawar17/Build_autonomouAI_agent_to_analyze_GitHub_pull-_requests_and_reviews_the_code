@@ -7,6 +7,12 @@ WORKDIR /app
 # Copy project files into the container
 COPY . .
 
+# # Install system dependencies
+# RUN apt-get update && apt-get install -y \
+#     gcc \
+#     libpq-dev \
+#     && apt-get clean
+
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
